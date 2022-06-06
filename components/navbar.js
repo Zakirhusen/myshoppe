@@ -10,8 +10,25 @@ import {
 import { FaUserCircle } from "react-icons/fa";
 import { useState,useRef, useEffect } from "react";
 
-const Navbar = ({addToCart,clearCart,cart,decByOne,incByOne, deleteFromCart}) => {
+const Navbar = ({addToCart,clearCart,cart,decByOne,incByOne, deleteFromCart ,subTotal}) => {
 
+  useEffect(() => {
+    // here useEffect can be used cart should be  hide on clicking anywhere in window
+    let tCart=(e)=>{
+      // console.log('clikced');
+      if (!refCart.current.contains(e.target)) {
+        refCart.current.classList.remove("translate-x-0");
+        refCart.current.classList.add("translate-x-full");
+      }
+    }
+    document.addEventListener('click',tCart)
+  
+    return () => {
+    document.removeEventListener('click',tCart)
+      
+    }
+  }, [])
+  
   // console.log("cart in nav.js",cart);
   let refMenu = useRef("");
   let refLogo = useRef("");
@@ -35,7 +52,10 @@ const Navbar = ({addToCart,clearCart,cart,decByOne,incByOne, deleteFromCart}) =>
       refLogo.current.classList.remove("-translate-y-[200%]");
     }
   };
-  const toggleCart = () => {
+  const toggleCart = (e) => {
+    // Stoppropagation used stop firinng event defined on "document"
+    e.stopPropagation()
+    // console.log('toggle cart is clicked');
     if (refCart.current.classList.contains("translate-x-full")) {
       refCart.current.classList.add("translate-x-0");
       refCart.current.classList.remove("translate-x-full");
@@ -49,11 +69,9 @@ const Navbar = ({addToCart,clearCart,cart,decByOne,incByOne, deleteFromCart}) =>
     }
   };
   let numOfItems=0
-  if(Object.keys(cart)){
   Object.keys(cart).forEach(itemId => {
     numOfItems+= cart[itemId].qty
   });
-}
 
   return (
     <>
@@ -149,10 +167,7 @@ const Navbar = ({addToCart,clearCart,cart,decByOne,incByOne, deleteFromCart}) =>
       </nav>
 
       {/* designing Cart */}
-      <div
-        ref={refCart}
-        className="cart transition-transform z-50 bg-blue-100 overflow-y-scroll fixed top-0 translate-x-full right-0 sm:w-2/5 w-4/5 border-2 borer-red-800 h-screen"
-      >
+      <div ref={refCart}  className="cart  transition-transform z-50 bg-blue-100 overflow-y-scroll fixed top-0 translate-x-full right-0 sm:w-2/5 w-4/5 border-2 borer-red-800 h-screen">
         <div className="text-right flex  justify-end m-3">
           <AiOutlineClose
             onClick={toggleCart}
@@ -164,18 +179,18 @@ const Navbar = ({addToCart,clearCart,cart,decByOne,incByOne, deleteFromCart}) =>
         </h1>
         <div className="cart-items  mt-2 -2 p-8 px-0 ml-5 text-[#0049af] font-semibold sm:text-xl text-base ">
           <ol className="list-decimal space-y-3 sm:pl-5 lg:pl-10 w-full">
-           {Object.keys(cart).length==0 && <p className="my-5 p-0 capitalize">please Add some items to checkout</p>}
+           {Object.keys(cart).length==0  && <p className="my-5 p-0 capitalize">please Add some items to checkout</p>}
           {
             Object.keys(cart).map((itemId)=>{
               {/* console.log("itemId is ",itemId)
               console.log("Object.itemIds(cart)",Object.itemIds(cart)) */}
               return(<li key={itemId}>
               <div className="flex items-center">
-                <div className="item-name capitalize md:w-3/5 w-1/2">{`${cart[itemId].name} (${cart[itemId].size}/${cart[itemId].color})`}</div>
-                <div className="item-name flex border-2 w-1/2 lg:w-2/5 lg:px-5">
-                  <div onClick={()=>{deleteFromCart(itemId)}}  className="flex hover:text-red-600 items-center justify-center lg:text-2xl sm:text-xl text-lg cursor-pointer bg-gren-500 w-1/4">
+                <div className="item-name text-sm md:text-base pr-4 capitalize md:w-3/5 w-1/2">{`${cart[itemId].name} (${cart[itemId].size}/${cart[itemId].color})`.slice(0,20)+` . . .`}</div>
+                <div className="item-name flex  w-1/2 lg:w-2/5 lg:px-5">
+                {cart[itemId].qty>1 && <div onClick={()=>{deleteFromCart(itemId)}}  className="flex hover:text-red-600 items-center justify-center lg:text-2xl sm:text-xl text-lg cursor-pointer bg-gren-500 w-1/4">
                     <AiOutlineDelete />
-                  </div>
+                  </div>}
                   <div  className="text-center border-2 rounded-l-xl bg-blue-50 h-8 flex items-center justify-center font-bold text-xs w-1/3">
                     {cart[itemId].qty>1 && <AiOutlineMinus onClick={()=>decByOne(itemId)} className="text-base top-0 right-0 fo-bold" />}
                     {cart[itemId].qty<=1 && <AiOutlineDelete onClick={()=>{deleteFromCart(itemId)}} className="text-xl hover:text-red-600 top-0 right-0 fo-bold" /> }
@@ -190,23 +205,23 @@ const Navbar = ({addToCart,clearCart,cart,decByOne,incByOne, deleteFromCart}) =>
                 </div>
               </div>
             </li>
-            
-            )
-            })
+            )})
             }
           </ol>
 
           {/* checkout and clear cart button */}
           <div className="my-10 px-5 flex space-x-3">
+          <Link href="/checkout">
             <button
-              type="submit"
-              className="group capitalize relative w-40 flex justify-center py-2 px-4 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 "
+              type="button" onClick={toggleCart} 
+              className="group capitalize relative w-40 flex justify-center py-2 px-4 border border-transparent text-base font-medium rounded-md text-white bg-[#0049af] hover:bg-blue-700 "
             >
               checkout
             </button>
+            </Link>
             <button
-              type="button" onClick={clearCart}
-              className="group capitalize relative w-40 flex justify-center py-2 px-4 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700  "
+              type="button" onClick={clearCart} 
+              className="group capitalize relative w-40 flex justify-center py-2 px-4 border border-transparent text-base font-medium rounded-md text-white bg-[#0049af] hover:bg-blue-700 "
             >
               clear
             </button>
@@ -214,9 +229,8 @@ const Navbar = ({addToCart,clearCart,cart,decByOne,incByOne, deleteFromCart}) =>
         </div>
       </div>
       {/* below div is manage space for navbar */}
-      <div className="h-16  py-10"></div>
+      <div className="h-16 py-10"></div>
     </>
   );
 };
-
 export default Navbar;

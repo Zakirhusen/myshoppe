@@ -13,11 +13,21 @@ const Product = (props) => {
   const checkService= async () => { 
     let data=await fetch("http://localhost:3000/api/pincode")
     let pincodes=await data.json()
-    console.log('pincodes',pincodes)
+    // console.log('pincodes',pincodes)
     pincodes.includes(parseInt(pin))?setPinService(true):setPinService(false);
-    console.log( typeof pin);
+    // console.log( typeof pin);
    }
-
+   const inputHandler=(e)=>{
+      setPin(e.target.value)
+    //   console.log("e.target.value",e.target.value)
+    //   console.log("pinService",pinService)
+    //  console.log("pin",pin)
+    //  console.log("pinlength",pin.length)
+     
+     if ((e.target.value).length==0) {
+       setPinService(null)
+      }
+    }
   return (
     <>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -177,22 +187,22 @@ const Product = (props) => {
                 <span className="title-font font-medium text-2xl text-gray-900">
                   &#x20B9; 499
                 </span>
-                <button type="button" onClick={()=>addToCart("myitem2",1,499,"XXL","red"," MyShoppe t-shirt")} className="flex mr-auto ml-12 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 uppercase rounded">
+                <button type="button" onClick={()=>addToCart("myitem5",1,25,"sm","red","t-shirt")} className="flex mr-auto ml-12 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 uppercase rounded">
                   Add to cart
                 </button>
               </div>
               <div className="">
                 <div className=" flex items-center mt-5">
-                  <input type="text" onChange={(e)=>setPin(e.target.value)} value={pin} className=" w-fit h-9 text-center  outline outline-2 outline-slate-300 rounded-sm  border-black "
+                  <input type="text" onChange={inputHandler} value={pin} className=" w-fit h-9 text-center  outline outline-2 outline-slate-300 rounded-sm  border-black "
                     placeholder="Enter Your Pincode"/>
                   <button onClick={checkService} className="flex h-10  ml-3 text-white bg-indigo-500 border-0 items-center px-3 focus:outline-none hover:bg-indigo-600 capitalize rounded">
                     Check
                   </button>
                 </div>
                 <div className="mt-1">
-                  <span className={`text-green-600  ${pinService?"inline":"hidden"}`}> 
+                  <span className={`text-green-600  ${pinService && pin?"inline":"hidden"}`}> 
                   Yay! We deliver to the location</span>
-                  <span className={`text-rose-600  ${(!pinService && pinService!=null)?"inline":"hidden"} `}> 
+                  <span className={`text-rose-600  ${(!pinService && pinService!==null )?"inline":"hidden"} `}> 
                   Not deliverable to that location</span>
               </div> 
               </div>

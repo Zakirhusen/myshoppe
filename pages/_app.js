@@ -6,15 +6,31 @@ import { useState, useEffect } from "react";
 function MyApp({ Component, pageProps }) {
   const [cart, setCart] = useState({});
   const [subTotal, setSubTotal] = useState(0);
-  console.log('cart',cart);
+  // console.log('cart',cart);
   useEffect(() => {
-    setCart(JSON.parse( localStorage.getItem("cart")))
-    console.log("cart inside useeefect");
+    if (localStorage.getItem("cart")) {
+
+      setCart(JSON.parse( localStorage.getItem("cart")))
+      saveCart({...JSON.parse( localStorage.getItem("cart"))})
+    }else{
+      setCart({})
+    }
+    
   }, []);
 
-  const saveCart=() => {
-    localStorage.setItem("cart",JSON.stringify(cart))
+  // save cart to local storage
+  const saveCart=(myCart) => {
+    localStorage.setItem("cart",JSON.stringify(myCart))
+    let cartLength=Object.keys(myCart)
+    let total=0
+    cartLength.forEach(cartItemId => {
+      total+= myCart[cartItemId].qty*myCart[cartItemId].price
+    });
+    setSubTotal(total)
+    // console.log("subtotal in app",subTotal)
    }
+
+  //  add item to the cart
   const addToCart = (itemId, qty, price, size, color, name) => {
     let newCart=cart;
       if (itemId in cart) {
@@ -22,34 +38,28 @@ function MyApp({ Component, pageProps }) {
         newCart[itemId].qty=parseInt(newCart[itemId]['qty']) + parseInt(qty)
       } else {
         newCart[itemId]={qty:1,price,size,color,name}
-
         // console.log("newCart is in else ",newCart)
       }
       setCart({...newCart})
-      saveCart()
+      saveCart(cart)
     }
-
-    
 
   // decrease quantity by 1 in car
   const decByOne=(itemId) => {
    let newCart=cart;
    if (newCart[itemId].qty>0) {
-     
      newCart[itemId].qty=parseInt(newCart[itemId]['qty']) - 1;
    }
-
    setCart({...newCart})
-   saveCart()
+   saveCart(cart)
   }
 
   // Increase quantity by 1 in car
   const incByOne=(itemId) => {
    let newCart=cart;
    newCart[itemId].qty=parseInt(newCart[itemId]['qty']) + 1;
-
    setCart({...newCart})
-   saveCart()
+   saveCart(cart)
   }
 
   // delete item from cart whateever the quantity is
@@ -57,21 +67,21 @@ function MyApp({ Component, pageProps }) {
     let newCart=cart;
       delete newCart[itemId];
     setCart({...newCart})
-    saveCart()
+    
+    saveCart(cart)
    }
 
    const clearCart=() => {
-     console.log('clear cart');
+    //  console.log('clear cart');
     setCart({})
-    // saveCart()
+    //  console.log('clear cart' ,cart);
+    saveCart({})
    }
 
   return (
     <>
-      <Navbar cart={cart} addToCart={addToCart} clearCart={clearCart} incByOne={incByOne} decByOne={decByOne}  deleteFromCart={deleteFromCart} />
-      
-
-      <Component {...pageProps} addToCart={addToCart} />
+      <Navbar cart={cart} subTotal={subTotal} addToCart={addToCart} clearCart={clearCart} incByOne={incByOne} decByOne={decByOne}  deleteFromCart={deleteFromCart} />
+      <Component  {...pageProps} cart={cart} addToCart={addToCart} subTotal={subTotal} incByOne={incByOne} decByOne={decByOne}  deleteFromCart={deleteFromCart} />
       <Footer />
     </>
   );

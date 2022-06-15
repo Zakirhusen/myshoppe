@@ -1,12 +1,19 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useEffect } from "react";
+import ConnectDb from "../../middleware/connectDb";
+import Product from "../../models/product";
+const mongoose=require("mongoose")
 
-const Product = (props) => {
-  let {addToCart,clearCart,removeFromCart, deleteFromCart}=props;
-  // console.log(props)
+const ProductSlug = (props) => {
+  let {addToCart,productData,variants}=props;
+  // console.log("productSlugData",productData)
+  // console.log("variants as props",variants)
   const [pin, setPin] = useState('')
   const [pinService, setPinService] = useState(null)
+
+  let color=productData.color
+  let size=productData.size
   let router = useRouter();
   const { product } = router.query;
   // console.log("router", router);
@@ -23,11 +30,21 @@ const Product = (props) => {
     //   console.log("pinService",pinService)
     //  console.log("pin",pin)
     //  console.log("pinlength",pin.length)
-     
+    
+    // instantly setState cant update  so here we use e.target.value
      if ((e.target.value).length==0) {
        setPinService(null)
       }
     }
+    const changeVariant =(e) => { 
+      // console.log('value of change variant',e.target.value);
+      // console.log('Object.keys(variants[e.target.value])',Object.keys(variants[e.target.value]));
+      // setSize(Object.keys(variants[e.target.value])[0])
+        console.log("color",e.target.value,'size is ii',size);
+        // router.push(`/product/${variants[e.target.name=="btnColor"?e.target.value:color][size].slug}`)
+        router.push(`/product/${variants[e.target.name=="btnColor"?e.target.value:color][e.target.name=="btnSize"?e.target.value:Object.keys(variants[e.target.value])[0]].slug}`)
+        // window.location=(`/product/${variants[e.target.value][Object.keys(variants[e.target.value])[0]].slug}`)
+     }
   return (
     <>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -36,7 +53,7 @@ const Product = (props) => {
             <img
               alt="ecommerce"
               className="lg:w-1/3 w-full lg:h-auto h-64 object-cover object-top rounded"
-              src="https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/8829449/2019/3/27/53f054a2-9e25-4323-b7cb-3dd75a8a935a1553680531988-Roadster-Men-Navy-Blue-Striped-Polo-Collar-T-shirt-295155368-1.jpg"
+              src={productData.img}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
@@ -144,28 +161,27 @@ const Product = (props) => {
                 </span>
               </div>
               <p className="leading-relaxed">
-                Fam locavore kickstarter distillery. Mixtape chillwave tumeric
-                sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo
-                juiceramps cornhole raw denim forage brooklyn. Everyday carry +1
-                seitan poutine tumeric. Gastropub blue bottle austin listicle
-                pour-over, neutra jean shorts keytar banjo tattooed umami
-                cardigan.
+                {productData.desc}
               </p>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                 <div className="flex">
                   <span className="mr-3">Color</span>
-                  <button className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>
-                  <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
-                  <button className="border-2 border-gray-300 ml-1 bg-indigo-500 rounded-full w-6 h-6 focus:outline-none"></button>
+                  {Object.keys(variants).includes("white") &&  <button name="btnColor" value="white" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl rounded-full w-6 h-6 ${color==="white"?"focus:outline-slate-500 focus:outline focus:outline-2":"none"}`}></button>}
+                  {Object.keys(variants).includes("grey") &&  <button name="btnColor" value="grey" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-gray-700 rounded-full w-6 h-6 ${color==="grey"?"focus:outline-slate-500 focus:outline focus:outline-2":"none"}`}></button>}
+                  {Object.keys(variants).includes("blue") &&  <button name="btnColor" value="blue" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-blue-800 rounded-full w-6 h-6 ${color==="blue"?"focus:outline-slate-500 focus:outline focus:outline-2":"none"}`}></button>}
+                  {Object.keys(variants).includes("black") &&  <button name="btnColor" value="black" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-black rounded-full w-6 h-6 ${color==="black"?"focus:outline-slate-500 focus:outline focus:outline-2":"none"}`}></button>}
+                  {Object.keys(variants).includes("yellow") &&  <button name="btnColor" value="yellow" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-yellow-400 rounded-full w-6 h-6 ${color==="yellow"?"focus:outline-slate-500 focus:outline focus:outline-2":"none"}`}></button>}
+                  {Object.keys(variants).includes("red") &&  <button name="btnColor" value="red" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-red-800 rounded-full w-6 h-6 ${color==="red"?"focus:outline-slate-500 focus:outline focus:outline-2":"none"}`}></button>}
                 </div>
                 <div className="flex ml-6 items-center">
                   <span className="mr-3">Size</span>
                   <div className="relative">
-                    <select className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10">
-                      <option>SM</option>
-                      <option>M</option>
-                      <option>L</option>
-                      <option>XL</option>
+                    <select name="btnSize" onChange={changeVariant} defaulvalue={size} className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10">
+                      {Object.keys(variants[color]).includes('S') && <option value="S">S</option>}
+                      {Object.keys(variants[color]).includes('M') && <option value="M">M</option>}
+                      {Object.keys(variants[color]).includes('L') && <option value="L">L</option>}
+                      {Object.keys(variants[color]).includes('XL') && <option value="XL">XL</option>}
+                      {Object.keys(variants[color]).includes('XXL') && <option value="XXL">XXL</option>}
                     </select>
                     <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                       <svg
@@ -185,9 +201,10 @@ const Product = (props) => {
               </div>
               <div className="flex">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  &#x20B9; 499
+                  &#x20B9; {productData.price}
                 </span>
-                <button type="button" onClick={()=>addToCart("myitem5",1,25,"sm","red","t-shirt")} className="flex mr-auto ml-12 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 uppercase rounded">
+                {/* <button type="button" onClick={()=>addToCart({}"myitem5",1,25,"sm","red","t-shirt")} className="flex mr-auto ml-12 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 uppercase rounded"> */}
+                <button type="button" onClick={()=>addToCart(productData.slug,1,productData.price,productData.size,productData.color,productData.title)} className="flex mr-auto ml-12 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 uppercase rounded">
                   Add to cart
                 </button>
               </div>
@@ -213,5 +230,40 @@ const Product = (props) => {
     </>
   );
 };
+export const getServerSideProps=async(context)=>{
+  // let product=await fetch(`http://localhost:3000/product/${context.req.query}`)
+  if (!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.MONGO_URI)
+  }
 
-export default Product;
+  // console.log('query',context);
+  const productSlug=await Product.findOne({slug:context.query.product})
+  // console.log('quey slug ',context.query.product);
+  
+  // console.log('productSlug in backtitle end slug',productSlug);
+  // console.log('productSlug in back ',productSlug.title);
+  const variants=await Product.find({title:productSlug.title})
+  // console.log('variants',variants);
+  let colorSizeSlug={}
+  for (const item of variants) {    
+  if (item.color in colorSizeSlug && item.availQty>0) {
+    colorSizeSlug[item.color][item.size]={slug:item.slug}
+  } else {
+    if(item.availQty>0){
+      colorSizeSlug[item.color]= {}
+      colorSizeSlug[item.color][item.size]= {slug:item.slug}
+    }
+  }
+}
+
+   console.log("colorSizeSlug",colorSizeSlug)
+  return{
+    props:{
+      productData: JSON.parse(JSON.stringify(productSlug)),
+      variants:JSON.parse(JSON.stringify(colorSizeSlug))
+    }
+  }
+}
+// export default getServerSideProps;
+
+export default ProductSlug;

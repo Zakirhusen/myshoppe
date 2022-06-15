@@ -1,108 +1,48 @@
-/*
-  This Tshirts requires Tailwind CSS v2.0+ 
-  
-  This Tshirts requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
-const products = [
-    {
-      id: 1,
-      name: 'Earthen Bottle',
-      href: '#',
-      price: 'Rs. 480',
-      imageSrc: 'https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/8829449/2019/3/27/53f054a2-9e25-4323-b7cb-3dd75a8a935a1553680531988-Roadster-Men-Navy-Blue-Striped-Polo-Collar-T-shirt-295155368-1.jpg',
-      imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-    },
-    {
-      id: 2,
-      name: 'Nomad Tumbler',
-      href: '#',
-      price: 'Rs. 350',
-      imageSrc: 'https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/8829449/2019/3/27/53f054a2-9e25-4323-b7cb-3dd75a8a935a1553680531988-Roadster-Men-Navy-Blue-Striped-Polo-Collar-T-shirt-295155368-1.jpg',
-      imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-    },
-    {
-      id: 3,
-      name: 'Focus Paper Refill',
-      href: '#',
-      price: 'Rs. 890',
-      imageSrc: 'https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/8829449/2019/3/27/53f054a2-9e25-4323-b7cb-3dd75a8a935a1553680531988-Roadster-Men-Navy-Blue-Striped-Polo-Collar-T-shirt-295155368-1.jpg',
-      imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-    },
-    {
-      id: 4,
-      name: 'Machined Mechanical Pencil',
-      href: '#',
-      price: 'Rs. 350',
-      imageSrc: 'https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/8829449/2019/3/27/53f054a2-9e25-4323-b7cb-3dd75a8a935a1553680531988-Roadster-Men-Navy-Blue-Striped-Polo-Collar-T-shirt-295155368-1.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    },
-    {
-      id: 4,
-      name: 'Machined Mechanical Pencil',
-      href: '#',
-      price: 'Rs. 350',
-      imageSrc: 'https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/8829449/2019/3/27/53f054a2-9e25-4323-b7cb-3dd75a8a935a1553680531988-Roadster-Men-Navy-Blue-Striped-Polo-Collar-T-shirt-295155368-1.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    },
-    {
-      id: 4,
-      name: 'Machined Mechanical Pencil',
-      href: '#',
-      price: 'Rs. 350',
-      imageSrc: 'https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/8829449/2019/3/27/53f054a2-9e25-4323-b7cb-3dd75a8a935a1553680531988-Roadster-Men-Navy-Blue-Striped-Polo-Collar-T-shirt-295155368-1.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    },
-    {
-      id: 4,
-      name: 'Machined Mechanical Pencil',
-      href: '#',
-      price: 'Rs. 350',
-      imageSrc: 'https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/8829449/2019/3/27/53f054a2-9e25-4323-b7cb-3dd75a8a935a1553680531988-Roadster-Men-Navy-Blue-Striped-Polo-Collar-T-shirt-295155368-1.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    },
-    {
-      id: 4,
-      name: 'Machined Mechanical Pencil',
-      href: '#',
-      price: 'Rs. 350',
-      imageSrc: 'https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/8829449/2019/3/27/53f054a2-9e25-4323-b7cb-3dd75a8a935a1553680531988-Roadster-Men-Navy-Blue-Striped-Polo-Collar-T-shirt-295155368-1.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    },
-    // More products...
-  ]
-  
-  export default function Example() {
+import Link from 'next/link';
+
+  const Tshirts=({tshirts})=> {
+    let products=tshirts
+    console.log('products',products);
     return (
       //  border-2  border-red-400
-      <div className="bg-white">
-        <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+      <div className="bg-white min-h-screen">
+        <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl min-h-screen lg:px-8">
           <h2 className="sr-only">Products</h2>
   
           <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-            {products.map((product,index) => (
-              <a key={index} href={"product/tshirts"} className=" group">
+            {Object.keys(products).map((product,index) => (
+              <Link key={products[product].slug} href={`/product/${products[product].slug}`}>
+              <a  className=" group">
                 <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
                   <img
-                    src={product.imageSrc}
-                    alt={product.imageAlt}
+                    src={products[product].img}
+                    alt={products[product].imageAlt}
                     className="w-full h-full object-top  object-cover "
                   />
                 </div>
-                <h3 className="mt-4 text-sm uppercase text-gray-700">category</h3>
-                <h3 className="mt-1 text-lg font-medium text-gray-900">{product.name}</h3>
-                <p className="mt-1 text-lg font text-gray-700">{product.price}</p>
+                <h3 className="mt-4 text-sm capitalize text-gray-700">{products[product].category}</h3>
+                <div className="flex ">
+                  {products[product].size.includes("S") && <span className="border-2 uppercase border-black-500 w-8 font-semibold text-center">s</span>}
+                  {products[product].size.includes("M") && <span className="border-2 uppercase border-black-500 w-8 font-semibold text-center">m</span>}
+                  {products[product].size.includes("L") && <span className="border-2 uppercase border-black-500 w-8 font-semibold text-center">L</span>}
+                  {products[product].size.includes("XL") && <span className="border-2 uppercase border-black-500 w-8 font-semibold text-center">XL</span>}
+                  {products[product].size.includes("XXL") && <span className="border-2 uppercase border-black-500 w-8 font-semibold text-center">XXL</span>}
+                  {products[product].size.includes("XXXL") && <span className="border-2 uppercase border-black-500 w-8 font-semibold text-center">XXXL</span>}
+                </div>
+                <div className="colors flex mt-2 space-x-1">
+                  {products[product].color.includes("white") && <button className="border-2 border-gray-300 bg-white-700 rounded-full w-6 h-6 focus:outline-none"></button>}
+                  {products[product].color.includes("black") && <button className="border-2 border-gray-300 bg-black  
+                   rounded-full w-6 h-6 focus:outline-none"></button>}
+                  {products[product].color.includes("grey") && <button className="border-2 border-gray-300 bg-gray-500 rounded-full w-6 h-6 focus:outline-none"></button>}
+                  {products[product].color.includes("yellow") && <button className="border-2 border-gray-300 bg-yellow-500 rounded-full w-6 h-6 focus:outline-none"></button>}
+                  {products[product].color.includes("blue") && <button className="border-2 border-gray-300 bg-blue-900 rounded-full w-6 h-6 focus:outline-none"></button>}
+                
+                </div>
+                <h3 className="mt-1 text-lg font-medium text-gray-900">{products[product].title}</h3>
+                <p className="mt-1 text-lg font text-gray-700">Rs. {products[product].price}</p>
               </a>
+              </Link>
+
             ))}
           </div>
         </div>
@@ -110,3 +50,37 @@ const products = [
     )
   }
   
+  export const getServerSideProps = async (context) => {
+  
+  let products=await fetch("http://localhost:3000/api/getproduct")
+  // console.log("context",context)
+  let data=await products.json()
+  // console.log("data",products)
+  let tshirts={}
+    data.forEach(item => {
+      // console.log('tshirts[item.title]',tshirts[item.title])
+      if (item.title in tshirts) {
+        if (item.availQty>0 && !tshirts[item.title]["color"].includes(item.color)) {
+          // console.log('tshirts[item.title]["color"]',tshirts[item.title]["color"],item.color);
+          tshirts[item.title]["color"].push(item.color)
+        }
+        if (item.availQty>0 && !tshirts[item.title]["size"].includes(item.size)) {
+          tshirts[item.title]["size"].push(item.size)
+        }
+      } else {
+        if (item.availQty>0) {
+          tshirts[item.title]={...item};  
+          tshirts[item.title]["color"]=[item.color];
+          tshirts[item.title]["size"]=[item.size];
+        }
+        
+      }
+    });
+    console.log('tshirts',tshirts)
+    return {
+      props:{
+        tshirts
+      }
+    }
+  }
+  export default Tshirts

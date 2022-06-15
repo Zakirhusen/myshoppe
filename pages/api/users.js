@@ -1,11 +1,7 @@
-import mongoose from "mongoose";
-let { Schema, connect } = mongoose;
-const connection = async () => {
-  await connect("mongodb://localhost:27017/sampleInfo");
-};
-connection().catch((err) => console.log(err));
-let usersSchema = new Schema({
-  name: { type: String, required: true },
-  email:{type:String,required:true},
-  password:{type:String,required:true}
-});
+import ConnectDb from "../../middleware/connectDb"
+import Product from "../../models/product"
+
+ function handler(req, res) {
+  res.status(200).json({ name: 'John Doe' })
+}
+export default ConnectDb(handler)

@@ -20,7 +20,7 @@ import Link from 'next/link';
                     className="w-full h-full object-top  object-cover "
                   />
                 </div>
-                <h3 className="mt-4 text-sm capitalize text-gray-700">{products[product].category}</h3>
+                <h3 className="my-4 text-sm capitalize text-gray-700">{products[product].category}</h3>
                 <div className="flex ">
                   {products[product].size.includes("S") && <span className="border-2 uppercase border-black-500 w-8 font-semibold text-center">s</span>}
                   {products[product].size.includes("M") && <span className="border-2 uppercase border-black-500 w-8 font-semibold text-center">m</span>}
@@ -36,6 +36,7 @@ import Link from 'next/link';
                   {products[product].color.includes("grey") && <button className="border-2 border-gray-300 bg-gray-500 rounded-full w-6 h-6 focus:outline-none"></button>}
                   {products[product].color.includes("yellow") && <button className="border-2 border-gray-300 bg-yellow-500 rounded-full w-6 h-6 focus:outline-none"></button>}
                   {products[product].color.includes("blue") && <button className="border-2 border-gray-300 bg-blue-900 rounded-full w-6 h-6 focus:outline-none"></button>}
+                  {products[product].color.includes("red") && <button className="border-2 border-gray-300 bg-red-600 rounded-full w-6 h-6 focus:outline-none"></button>}
                 
                 </div>
                 <h3 className="mt-1 text-lg font-medium text-gray-900">{products[product].title}</h3>
@@ -60,15 +61,15 @@ import Link from 'next/link';
     data.forEach(item => {
       // console.log('tshirts[item.title]',tshirts[item.title])
       if (item.title in tshirts) {
-        if (item.availQty>0 && !tshirts[item.title]["color"].includes(item.color)) {
+        if (item.availQty>0 && item.category=="tshirts" && !tshirts[item.title]["color"].includes(item.color)) {
           // console.log('tshirts[item.title]["color"]',tshirts[item.title]["color"],item.color);
           tshirts[item.title]["color"].push(item.color)
         }
-        if (item.availQty>0 && !tshirts[item.title]["size"].includes(item.size)) {
+        if (item.availQty>0 && item.category=="tshirts" && !tshirts[item.title]["size"].includes(item.size)) {
           tshirts[item.title]["size"].push(item.size)
         }
       } else {
-        if (item.availQty>0) {
+        if (item.category=="tshirts" && item.availQty>0 ) {
           tshirts[item.title]={...item};  
           tshirts[item.title]["color"]=[item.color];
           tshirts[item.title]["size"]=[item.size];

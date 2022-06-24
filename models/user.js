@@ -7,7 +7,8 @@ let { Schema,model,models } = mongoose;
 
 let userSchema = new Schema({
   name: { type: String, required: true },
-  email:{type:String,required:true},
+  email:{type:String,required:true,unique:true},
+  phone:{type:String,required:true,unique:true},
   password:{type:String,required:true}
 });
 // the || used prevent overwritten of model

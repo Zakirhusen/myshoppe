@@ -7,7 +7,7 @@ const mongoose=require("mongoose")
 
 const ProductSlug = (props) => {
   let {addToCart,productData,variants}=props;
-  // console.log("productSlugData",productData)
+  console.log("productSlugData",productData)
   // console.log("variants as props",variants)
   const [pin, setPin] = useState('')
   const [pinService, setPinService] = useState(null)
@@ -52,15 +52,15 @@ const ProductSlug = (props) => {
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
               alt="ecommerce"
-              className="lg:w-1/3 w-full lg:h-auto h-64 object-cover object-top rounded"
+              className="lg:w-1/3 w-full lg:h-auto  object- object-top rounded"
               src={productData.img}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
                 MyShoppe
               </h2>
-              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                The MyShoppe's T-shirt
+              <h1 className="text-gray-900 capitalize text-3xl title-font font-medium mb-1">
+                {`${productData.title}(${productData.size}/${productData.color})`}
               </h1>
               <div className="flex mb-4">
                 <span className="flex items-center">
@@ -166,12 +166,12 @@ const ProductSlug = (props) => {
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                 <div className="flex">
                   <span className="mr-3">Color</span>
-                  {Object.keys(variants).includes("white") &&  <button name="btnColor" value="white" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl rounded-full w-6 h-6 ${color==="white"?"focus:outline-slate-500 focus:outline focus:outline-2":"none"}`}></button>}
-                  {Object.keys(variants).includes("grey") &&  <button name="btnColor" value="grey" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-gray-700 rounded-full w-6 h-6 ${color==="grey"?"focus:outline-slate-500 focus:outline focus:outline-2":"none"}`}></button>}
-                  {Object.keys(variants).includes("blue") &&  <button name="btnColor" value="blue" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-blue-800 rounded-full w-6 h-6 ${color==="blue"?"focus:outline-slate-500 focus:outline focus:outline-2":"none"}`}></button>}
-                  {Object.keys(variants).includes("black") &&  <button name="btnColor" value="black" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-black rounded-full w-6 h-6 ${color==="black"?"focus:outline-slate-500 focus:outline focus:outline-2":"none"}`}></button>}
-                  {Object.keys(variants).includes("yellow") &&  <button name="btnColor" value="yellow" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-yellow-400 rounded-full w-6 h-6 ${color==="yellow"?"focus:outline-slate-500 focus:outline focus:outline-2":"none"}`}></button>}
-                  {Object.keys(variants).includes("red") &&  <button name="btnColor" value="red" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-red-800 rounded-full w-6 h-6 ${color==="red"?"focus:outline-slate-500 focus:outline focus:outline-2":"none"}`}></button>}
+                  {Object.keys(variants).includes("white") &&  <button name="btnColor" value="white" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl rounded-full w-6 h-6 ${color==="white"?"outline-slate-500 outline outline-2":"none"}`}></button>}
+                  {Object.keys(variants).includes("grey") &&  <button name="btnColor" value="grey" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-gray-700 rounded-full w-6 h-6 ${color==="grey"?"outline-slate-500 outline outline-2":"none"}`}></button>}
+                  {Object.keys(variants).includes("blue") &&  <button name="btnColor" value="blue" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-blue-800 rounded-full w-6 h-6 ${color==="blue"?"outline-slate-500 outline outline-2":"none"}`}></button>}
+                  {Object.keys(variants).includes("black") &&  <button name="btnColor" value="black" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-black rounded-full w-6 h-6 ${color==="black"?"outline-slate-500 outline outline-2":"none"}`}></button>}
+                  {Object.keys(variants).includes("yellow") &&  <button name="btnColor" value="yellow" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-yellow-400 rounded-full w-6 h-6 ${color==="yellow"?"outline-slate-500 outline outline-2":"none"}`}></button>}
+                  {Object.keys(variants).includes("red") &&  <button name="btnColor" value="red" onClick={changeVariant} className={`border-2 border-gray-300 shadow-xl ml-1 bg-red-800 rounded-full w-6 h-6 ${color==="red"?"outline-slate-500 outline outline-2":"none"}`}></button>}
                 </div>
                 <div className="flex ml-6 items-center">
                   <span className="mr-3">Size</span>

@@ -31,10 +31,10 @@ import Link from 'next/link';
                 </div>
                 <div className="colors flex mt-2 space-x-1">
                   {products[product].color.includes("white") && <button className="border-2 border-gray-300 bg-white-700 rounded-full w-6 h-6 focus:outline-none"></button>}
-                  {products[product].color.includes("black") && <button className="border-2 border-gray-300 bg-black  
-                   rounded-full w-6 h-6 focus:outline-none"></button>}
+                  {products[product].color.includes("black") && <button className="border-2 border-gray-300 bg-black rounded-full w-6 h-6 focus:outline-none"></button>}
                   {products[product].color.includes("grey") && <button className="border-2 border-gray-300 bg-gray-500 rounded-full w-6 h-6 focus:outline-none"></button>}
                   {products[product].color.includes("yellow") && <button className="border-2 border-gray-300 bg-yellow-500 rounded-full w-6 h-6 focus:outline-none"></button>}
+                  {products[product].color.includes("silver") && <button className="border-2 border-gray-300 bg-slate-200 rounded-full w-6 h-6 focus:outline-none"></button>}
                   {products[product].color.includes("blue") && <button className="border-2 border-gray-300 bg-blue-900 rounded-full w-6 h-6 focus:outline-none"></button>}
                   {products[product].color.includes("red") && <button className="border-2 border-gray-300 bg-red-600 rounded-full w-6 h-6 focus:outline-none"></button>}
                 

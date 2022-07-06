@@ -8,22 +8,12 @@ import {
   AiOutlineMinus,
 } from "react-icons/ai";
 const Checkout = ({ cart, decByOne, incByOne,subTotal, deleteFromCart }) => {
-  //  console.log("cart in checout",cart)
-  //  console.log("subtotal in checout",subTotal)
-  
-  //  let totalPrice=0
-  //  let total=()=>{
-  //   let cartLength=Object.keys(cart)
-  //   // let total=0
-  //   cartLength.forEach(cartItemId => {
-  //     totalPrice+= cart[cartItemId].qty*cart[cartItemId].price
-  //   });
-  //   return totalPrice
-  //  }
-  //  total()
+  const initiatePayment=()=>{
+  }
   return (
     <>
       <section className="text-gray-600 body-font relative">
+      {/* <Script type="application/javascript" id="stripe-js" src="https://securegw-stage.paytm.in/merchantpgpui/checkoutjs/merchants/BluSMU01785622758672.js" </Script> */}
         <div className=" sm:px-5 p-1 w-full py-24 mx-auto">
           {/* address details */}
           <div className="lg:w-1/2  md:w-2/3 mx-auto">
@@ -178,6 +168,7 @@ const Checkout = ({ cart, decByOne, incByOne,subTotal, deleteFromCart }) => {
               <div className="lg:mx-3 sm:px-3 capitalize text-xl ">subtotal: &#x20B9; {subTotal}</div>
               </div>
             </div>
+            {/* <Link href="/payment" onClick={initiatePayment}> */}
             <Link href="/payment">
               <div className="py-2 w-full">
                 <button className="flex mx-right text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">

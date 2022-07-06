@@ -10,10 +10,6 @@ import Product from "../../models/product"
     // console.log('data',data.length);
 
     data =JSON.parse(JSON.stringify(data))
-
-    ;
-// console.log('data',typeof data[0]._id);
-
      res.status(200).json(data)
    }
 }

@@ -114,6 +114,7 @@ const Navbar = ({clearCart,cart,decByOne,incByOne,deleteFromCart,subTotal,logOut
       <nav className="py-6 bg-blue-100 fixed z-1000 w-full top-0 mb-7 z-40">
         <div className="navmain  border-red-8 flex border- bg-blue-100 ">
           <div className="flex flex-row sm:flex-col lg:flex-row w-2/3 justify-between sm:justify-center items-center ">
+          
             {/* mobile menu */}
             <div
               onClick={toggleMenu}
@@ -211,22 +212,22 @@ const Navbar = ({clearCart,cart,decByOne,incByOne,deleteFromCart,subTotal,logOut
           className="items hidden sm:hidden  px-5 mt-3 border-red- border- m-0  text-lg text-[#0049af] capitalize font-semibold"
         >
           <ul className="flex-col space-y-5  items-start border-red- border-">
-            <li>
+            <li onClick={toggleMenu}>
               <Link href="/tshirts">
                 <a>tshirts</a>
               </Link>
             </li>
-            <li>
+            <li onClick={toggleMenu}>
               <Link href="/shoes">
                 <a>shoes</a>
               </Link>
             </li>
-            <li>
+            <li onClick={toggleMenu}>
               <Link href="/watches">
                 <a>watches</a>
               </Link>
             </li>
-            <li>
+            <li onClick={toggleMenu}>
               <Link href="/mugs">
                 <a>mugs</a>
               </Link>
